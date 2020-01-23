@@ -48,118 +48,125 @@
 								</a><br><br>
 			<div class="portlet-body">
 				
-				<table class="table table-striped table-hover table-bordered" id="sample_editable_1">
-					<thead>
-						<tr>
-							<th width="2">No</th>
-							<th>Aksi</th>
-							<th>Kategori Galeri</th>
+			 <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Aksi</th>
+                                <th>Kategori Galeri</th>                          
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no=1;
+                            
+                            foreach ($kategori_galeri->result_array() as $tampil) { 
+                             
+                             $id_kategori=$tampil['id_kategori_galeri'];
+												                 $nm_kategori=$tampil['nama_kategori_galeri']; ?>
+                                <tr >
 
-							
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-						$no=1;
-						
-						foreach ($kategori_galeri->result_array() as $tampil) { ?>
-							<tr >
+                                    <td><?php echo $no;?></td>
+                                    <td><a data-toggle="modal" data-target="#m_modal_2<?php echo $tampil['id_kategori_galeri'];?>"><i class="fa fa-edit"></i></a> &nbsp;
 
-								<td width="2"><?php echo $no;?></td>
-								<td><a  href="<?php echo base_url();?>sistem/kategori_galeri_edit/<?php echo $tampil['id_kategori_galeri'];?>"><i class="fa fa-edit"></i></a> &nbsp;
+                                        <a  href="<?php echo base_url();?>sistem/kategori_galeri_delete/<?php echo $tampil['id_kategori_galeri'];?>" onclick="return confirm('Yakin Ingin Menghapus <?php echo $tampil['nama_kategori_galeri'];?>?')"> <i class="fa fa-times"></i></a>
+                                        <td><?php echo $tampil['nama_kategori_galeri'];?></td>                                    
+                                    </tr>
+                                    <?php
+                                    $no++;
+                                }
+                                ?>                     
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
 
-									<a  href="<?php echo base_url();?>sistem/kategori_galeri_delete/<?php echo $tampil['id_kategori_galeri'];?>" onclick="return confirm('Yakin Ingin Menghapus <?php echo $tampil['nama_kategori_galeri'];?>?')"> <i class="fa fa-times"></i></a>
-									<td><?php echo $tampil['nama_kategori_galeri'];?></td>
+        <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        
+                                <div class="modal-dialog modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                Add Kategori Galeri
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">
+                                                    &times;
+                                                </span>
+                                            </button>
+                                        </div>
+                                    
+                                        <div class="modal-body">
+                                    
+                                    
+                                        <?php echo form_open('sistem/kategori_galeri_simpan/'); ?>
+                                                <div class="form-group">
+                                                    <label for="recipient-name" class="form-control-label">
+                                                        Kategori Galeri:
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="" name="nama_kategori_galeri" required="" autocomplete="off">
+                                                </div>
+                                                
+                                            
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">
+                                                Save
+                                            </button>
+                                            <?php echo form_close();?> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Modal-->
 
-									
-								</tr>
-								<?php
-								$no++;
-							}
-							?>
-							
-
-							
-						</tbody>
-					</table>
+                           	<?php
+										$no=1;
+										
+											foreach ($kategori_galeri->result_array() as $tampil) {
+            $id_kategori=$tampil['id_kategori_galeri'];
+            $nm_kategori=$tampil['nama_kategori_galeri']; ?>
+	<div class="modal fade" id="m_modal_2<?php echo $tampil['id_kategori_galeri'];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						Edit Kelas Kamar
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							&times;
+						</span>
+					</button>
+				</div>
+			
+				<div class="modal-body">
+				<?php echo form_open('sistem/kategori_galeri_update/'); ?>
+						<div class="form-group">
+							<label for="recipient-name" class="form-control-label">
+								Kelas Kamar:
+							</label>
+							<input type="hidden" name="id_kategori_galeri" value="<?php echo $id_kategori;?>">
+							<input type="text" class="form-control" placeholder="" name="nama_kategori_galeri"  value="<?php echo $nm_kategori;?>" required="" autocomplete="off">
+						</div>				
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						Close
+					</button>
+					<button type="submit" class="btn btn-primary">
+						Update
+					</button>
+					<?php echo form_close();?> 
 				</div>
 			</div>
-			
 		</div>
 	</div>
-
-<!-- /.modal-Tambah -->
-
-	<div class="modal fade" id="modal-default">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Add Kategori Galeri</h4>
-              </div>
-			  <?php if(validation_errors()) { ?>
-			  <?php echo validation_errors(); ?>
-									</div>
-									<?php 
-									} 
-									?>
-											
-												<?php echo form_open('sistem/kategori_galeri_simpan/','class="form-horizontal"'); ?>
-              <div class="modal-body">
-			  
-			  <div class="form-group">
-			  <label class="control-label col-md-3">Kategori Galeri</label>
-															<div class="col-md-9">
-																<input type="text" class="form-control" placeholder="" name="nama_kategori_galeri" required="">
-              </div>
-			  </div>
-			  <br>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
-				<?php echo form_close();?>  
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
-
-		<!-- /.modal-Tambah -->
-
-	<div class="modal fade" id="modal-edit">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Kategori Galeri</h4>
-              </div>
-			  <?php if(validation_errors()) { ?>
-			  <?php echo validation_errors(); ?>
-									</div>
-									<?php 
-									} 
-									?>
-											
-												<?php echo form_open('sistem/kategori_galeri_simpan/','class="form-horizontal"'); ?>
-              <div class="modal-body">
-			  
-			  <div class="form-group">
-			  <label class="control-label col-md-3">Kategori Galeri</label>
-															<div class="col-md-9">
-																<input type="text" class="form-control" placeholder="" name="nama_kategori_galeri" required="">
-              </div>
-			  </div>
-			  <br>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
-				<?php echo form_close();?>  
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
+											<?php } ?>

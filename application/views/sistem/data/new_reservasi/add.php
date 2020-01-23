@@ -8,36 +8,39 @@
  </section><br>
 
 
+
+
  <div class="portlet box green">
           <div class="portlet-title">           
             <?php echo form_open_multipart('sistem/new_reservasi_simpan/','class="form-horizontal"'); ?>
             <div class="form-body">
              <h3 class="form-section"></h3>
              <div class="row">  
+
               <div class="col-md-6">
                <div class="form-group">
                 <label class="control-label col-md-3">Tanggal Masuk</label>
                 <div class="col-md-9">
                 <div class="input-group date">
-                   <div class="input-group-addon">
+                  <div class="input-group-addon">
                      <i class="fa fa-calendar"></i>
                    </div>	
-                   <input type="text" class="form-control pull-right" name="tgl_reservasi_masuk" id="tgl_reservasi_masuk"  required=""  autocomplete="" value="">
+                   <input class="form-control datepicker"  name="tgl_reservasi_masuk" id="tgl_reservasi_masuk" size="16" type="text" value="" autocomplete="" >
                  </div>
                 </div>
 																</div>
               </div>
 
+              
 														<div class="col-md-6">
                <div class="form-group">
                 <label class="control-label col-md-2">Tanggal Keluar</label>
                 <div class="col-md-9">
                 <div class="input-group date">
-               
-                   <div class="input-group-addon">
+                    <div class="input-group-addon">
                      <i class="fa fa-calendar"></i>
                    </div>
-                   <input type="text" class="form-control pull-right" name="tgl_reservasi_keluar" id="tgl_reservasi_keluar"  required="">
+                   <input  type="text" class="form-control datepicker"  name="tgl_reservasi_keluar" id="tgl_reservasi_keluar"   required="" value="">
                  </div>
                 </div>
 																</div>
@@ -67,7 +70,7 @@
                <div class="form-group">
                 <label class="control-label col-md-2">Nama</label>
                 <div class="col-md-9">
-                 <input type="text" class="form-control" placeholder="" name="nama_reservasi" required="">
+                 <input type="text" class="form-control" placeholder="" name="nama_reservasi" required="" autocomplete="">
                  
                 </div>
                </div>
@@ -91,7 +94,7 @@
                <div class="form-group">
                 <label class="control-label col-md-2">Alamat</label>
                 <div class="col-md-9">
-                 <TextArea type="text" class="form-control" placeholder="" name="alamat_reservasi" required=""></TextArea>
+                 <TextArea type="text" class="form-control" placeholder="" name="alamat_reservasi" required="" autocomplete=""></TextArea>
                  
                 </div>
                </div>

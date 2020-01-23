@@ -1581,7 +1581,7 @@ class sistem extends CI_Controller {
 			$this->form_validation->set_rules('tgl_reservasi_keluar','Tanggal Keluar','required');
 			$this->form_validation->set_rules('kamar_id','Kamar','required');
 			$this->form_validation->set_rules('nama_reservasi','Nama','required');
-			$this->form_validation->set_rules('telp_reservasi','Telprequired');
+			$this->form_validation->set_rules('telp_reservasi','Telp','required');
 			$this->form_validation->set_rules('alamat_reservasi','Alamat','required');
 			
 		
