@@ -18,12 +18,13 @@ foreach ($tentang_kami->result_array() as  $value) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Hotel Reservation </title>
+<title>Grand Hotel Suwawal </title>
 <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
  	<link rel="stylesheet" href="<?php echo base_url();?>assets/bootstrap/css/bootstrap.css" />
   <link rel="stylesheet" href="<?php echo base_url();?>assets/style.css"/>
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <script src="<?php echo base_url();?>assets/jquery-1.9.1.min.js"></script>
 	<script src="<?php echo base_url();?>assets/bootstrap/js/bootstrap.js"></script>
   <script src="<?php echo base_url();?>assets/script.js"></script>
@@ -99,7 +100,7 @@ foreach ($tentang_kami->result_array() as  $value) {
 
 <!-- Header Starts -->
 <div class="header">
-<center><a href="<?php echo base_url();?>"><img src="<?php echo base_url();?>images/tentang_kami/<?php echo $logo;?>" alt="Sistem Hotel"></a></center>
+<a href="<?php echo base_url();?>"><img src="<?php echo base_url();?>images/tentang_kami/<?php echo $logo;?>" alt="Sistem Hotel"></a>
 
               <ul class="pull-right">
                 <!-- <li><a href="<?php echo base_url();?>buysalerent.php">Buy</a></li>
@@ -166,7 +167,7 @@ foreach ($tentang_kami->result_array() as  $value) {
 
 
 <script src="<?php echo base_url();?>assets/date_picker_bootstrap/bootstrap.min.js" type="text/javascript"></script>
-
+<script src="<?php echo base_url();?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 
 <script type="text/javascript" src="<?php echo base_url();?>assets/date_picker_bootstrap/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 
@@ -174,26 +175,30 @@ foreach ($tentang_kami->result_array() as  $value) {
 
 
 <script type="text/javascript">
+//Date picker
 
- $('.form_date').datetimepicker({
 
-        language:  'id',
+//Date picker
+    var nowDate = new Date();
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+     $(function(){
+      $(".datepicker").datepicker({
+          format:'yyyy-mm-dd',
+          autoclose: true,
+          todayHighlight: true,
+          startDate: today 
 
-        weekStart: 1,
+      });
+      $("#tgl_reservasi_masuk").on('changeDate', function(selected) {
+          var startDate = new Date(selected.date.valueOf());
 
-        todayBtn:  1,
-
-  autoclose: 1,
-
-  todayHighlight: 1,
-
-  startView: 2,
-
-  minView: 2,
-
-  forceParse: 0
-
-    });
+          $("#tgl_reservasi_keluar").datepicker('setStartDate', startDate);
+            if($("#tgl_reservasi_masuk").val() > $("#tgl_reservasi_keluar").val()){
+          $("#tgl_reservasi_keluar").val($("#tgl_reservasi_masuk").val());
+          }
+      });
+  });
+ 
 
 </script>
 

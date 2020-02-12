@@ -11,13 +11,38 @@
 <div class="row">
 				<div class="col-md-12">
 					
-					
+				<form method="post" action="">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="form-group">
+						<input id="tanggal" type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker" name="tanggal_awal" placeholder="Dari Tanggal" required="" />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<input id="tanggal2"  type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker" name="tanggal_akhir" placeholder="Sampai Tanggal" />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<button class="btn btn-success" type="submit" name="laporan-transaksi">Lihat Laporan</button>
+					<a class="btn btn-primary " href="<?= base_url() ?>sistem/print"target="_BLANK" >
+                           <i class="fa fa-print"> Print</i></a>
+				</div>
+			
+			</div>
+			
+			</form>
+			
+                        
+
+                 
 					<div class="portlet box green">
 						<div class="portlet-title">
 						 
 
 							
 						</div>
+						 <div class="body">
 
 						<div class="portlet-body">
 							
@@ -39,13 +64,13 @@
 											<?php
 										$no=1;
 										
-											foreach ($reservasi->result_array() as $tampil) { ?>
+										foreach ($reservasi->result_array() as $tampil) { ?>
 										<tr >
 
 											<td><?php echo $no;?></td>
-											<td><?php echo $tampil['nama_reservasi'];?></td>
-											<td><?php echo $tampil['telp_reservasi'];?></td>
-											<td><?php echo $tampil['alamat_reservasi'];?></td>
+											<td><?php echo $tampil['nama'];?></td>
+											<td><?php echo $tampil['telp'];?></td>
+											<td><?php echo $tampil['alamat'];?></td>
 											<td><?php echo tgl_indo($tampil['tgl_reservasi_masuk']);?></td>
 											<td><?php echo tgl_indo($tampil['tgl_reservasi_keluar']);?></td>
 											<td><?php echo $tampil['nomer_kamar'];?></td>
@@ -66,3 +91,4 @@
 					
 				</div>
 			</div>
+			

@@ -182,7 +182,7 @@
     <input type="hidden" name="id_kamar" value="<?php echo $id_kamar;?>">
      <div class="input-group date form_date col-md-12" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                            <input class="form-control"  type="text" name="tgl_reservasi_masuk" placeholder="Tanggal Chek In">
+                                                            <input id="tgl_reservasi_masuk"  class="form-control datepicker" type="text" name="tgl_reservasi_masuk" placeholder="Tanggal Chek In">
 
                                             
 
@@ -190,14 +190,14 @@
                                                         <br>
       <div class="input-group date form_date col-md-12" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                            <input class="form-control"  type="text" name="tgl_reservasi_keluar" placeholder="Tanggal Chek Out">
+                                                            <input  id="tgl_reservasi_keluar"  class="form-control datepicker"    type="text" name="tgl_reservasi_keluar" placeholder="Tanggal Chek Out">
 
                                             
 
                                                         </div>
                                                         <br>
                 <input type="text" class="form-control" name="nama_reservasi" placeholder="Nama"/>
-                <input type="text" class="form-control" name="telp_reservasi" placeholder="Tlp"/>
+                <input type="number" class="form-control" name="telp_reservasi" placeholder="Tlp"/>
                 <textarea rows="6" class="form-control" name="alamat_reservasi" placeholder="Alamat"></textarea>
       <button type="submit" class="btn btn-primary" name="Submit">Booking Kamar</button>
      

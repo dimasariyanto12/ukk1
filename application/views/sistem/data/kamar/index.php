@@ -41,9 +41,9 @@
 							?>
 						<div class="portlet box green">
 		<div class="box-header">
-		<a class="btn  btn-primary pull-left" href="<?= base_url()?>sistem/kamar_tambah" >
-									Add <i class="fa fa-plus"></i>
-								</a>
+		<a class="btn  btn-primary pull-left" href="<?= base_url()?>sistem/kamar_tambah" ><i class="fa fa-plus"></i>
+									Tambah Kamar <br>
+								</a><br><br>
 
 						<div class="portlet-body">
 							<div class="table-toolbar">
@@ -53,7 +53,7 @@
 									
 								</div>
 							</div>
-							<table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+							<table id="example1" class="table table-bordered table-striped">
 							<thead>
 							<tr>
 								<th>No</th>

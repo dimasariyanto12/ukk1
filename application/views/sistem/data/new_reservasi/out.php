@@ -10,11 +10,13 @@
 
  <div class="portlet box green">
           <div class="portlet-title">
-           
+          <?= form_error('uang_bayar', '<small class="text-danger pl-3">', '</small>'); ?>
+		                            	
            
           </div>
           <div class="portlet-body form">
            <?php if(validation_errors()) { ?>
+            
          <div class="alert alert-danger">
            <button type="button" class="close" data-dismiss="alert">×</button>
           <?php echo validation_errors(); ?>
@@ -52,7 +54,7 @@
                <div class="form-group">
                 <label class="control-label col-md-3">Nama</label>
                 <div class="col-md-9">
-                 <input type="text" class="form-control"  name="nama_reservasi" value="<?php echo $nama_reservasi;?>" disabled>
+                 <input type="text" class="form-control"  name="nama" value="<?php echo $nama;?>" disabled>
                  
                 </div>
                </div>
@@ -62,7 +64,7 @@
                <div class="form-group">
                 <label class="control-label col-md-2">Telp</label>
                 <div class="col-md-9">
-                 <input type="text" class="form-control" name="telp_reservasi" value="<?php echo $telp_reservasi;?>" disabled>
+                 <input type="text" class="form-control" name="telp" value="<?php echo $telp;?>" disabled>
                  
                 </div>
                </div>
@@ -75,7 +77,7 @@
                <div class="form-group">
                 <label class="control-label col-md-3">Alamat</label>
                 <div class="col-md-9">
-                 <input type="text" class="form-control"  name="alamat_reservasi" value="<?php echo $alamat_reservasi;?>" disabled>
+                 <input type="text" class="form-control"  name="alamat" value="<?php echo $alamat;?>" disabled>
                  
                 </div>
                </div>
@@ -167,7 +169,7 @@
                <div class="form-group">
                 <label class="control-label col-md-2">Uang Kembali</label>
                 <div class="col-md-9">
-                 <input type="text" class="form-control" name="kembalian" id="kembalian" readonly="">
+                 <input type="text" class="form-control" name="kembalian" id="kembalian" readonly >
                  
                 </div>
                </div>
@@ -176,40 +178,26 @@
              </div>
 
 
-            </div>
-            <div class="form-actions">
+   
             <div class="panel-footer">
                           
 																										
                  <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Bayar</button>
 																
                        </div>   
-             </div>
-            </div>
+           
+           
            <?php echo form_close();?>  
            
-          </div>
-         </div>
+        
 
-
- <script type="text/javascript">
-  
-
-  $(document).ready(function() {
-
-   $("#uang_bayar").focus();
-
-    $("#uang_bayar").keyup(function(e) {
-
-     var total_bayar =  $("#total_bayar").val();
-     var uang_bayar =  $("#uang_bayar").val();
-
-     var kembalian = uang_bayar - total_bayar;
-
-     $("#kembalian").val(kembalian);
-
-
-                   
-          });
-  });
- </script>
+         <script>
+function sum() {
+      var txtFirstNumberValue = document.getElementById('total_bayar').value;
+      var txtSecondNumberValue = document.getElementById('uang_bayar').value;
+      var result = parseInt(txtFirstNumberValue) - parseInt(txtSecondNumberValue);
+      if (!isNaN(result)) {
+         document.getElementById('kembalian').value = result;
+      }
+}
+</script>

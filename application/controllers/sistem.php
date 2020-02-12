@@ -10,6 +10,7 @@ class sistem extends CI_Controller {
 	public function index () {
 
 			$data['tentang_kami'] = $this->sistem_model->TentangKami();
+			$data['tentang_kami'] = $this->sistem_model->TentangKami();
 			$this->load->view('sistem/login',$data);
 
 	}
@@ -44,6 +45,8 @@ class sistem extends CI_Controller {
 
 		if($this->session->userdata("id_user")!=="") {
 
+			
+			$data['new_reservasi'] = $this->sistem_model->NewReservasi();
 			$data['new_reservasi'] 	= $this->sistem_model->NewReservasiBaru();
 			$data['kamar']			= $this->sistem_model->KamarKosong();
 			$this->template_system->load('template_system','sistem/data/index',$data);
@@ -1340,11 +1343,17 @@ class sistem extends CI_Controller {
 	public function reservasi() {
 
 		if($this->session->userdata("id_user")!=="" ) {
+			
 
-			$data['reservasi'] = $this->sistem_model->Reservasi();
-
-			$this->template_system->load('template_system','sistem/data/reservasi/index',$data);
-
+		$data['reservasi'] = $this->sistem_model->Reservasi();
+		// $data['transaksi'] = $this->Transaksi_model->getPesananById();
+		if ($this->input->post('tanggal_awal') && $this->input->post('tanggal_akhir')) {
+			$data['reservasi'] = $this->sistem_model->getLaporanByDate();
+			// var_dump($data['Pesanan']);
+			// die();
+			
+		}
+		$this->template_system->load('template_system','sistem/data/reservasi/index',$data);
 		}
 		else{
 			redirect('sistem');
@@ -1355,6 +1364,7 @@ class sistem extends CI_Controller {
 	public function new_reservasi () {
 
 		if($this->session->userdata("id_user")!=="" ) {
+			
 
 			$data['new_reservasi'] = $this->sistem_model->NewReservasi();
 
@@ -1440,9 +1450,9 @@ class sistem extends CI_Controller {
 
 			foreach ($query->result_array() as $value) {
 				$data['id_reservasi'] 			= $value['id_reservasi'];
-				$data['nama_reservasi']	 		= $value['nama_reservasi'];
-				$data['telp_reservasi'] 		= $value['telp_reservasi'];
-				$data['alamat_reservasi'] 		= $value['alamat_reservasi'];
+				$data['nama']	 				= $value['nama'];
+				$data['telp'] 					= $value['telp'];
+				$data['alamat'] 				= $value['alamat'];
 				$data['tgl_reservasi_masuk']	= $value['tgl_reservasi_masuk'];
 				$data['tgl_reservasi_keluar'] 	= $value['tgl_reservasi_keluar'];
 				$data['id_kamar'] 				= $value['id_kamar'];
@@ -1469,6 +1479,40 @@ class sistem extends CI_Controller {
 
 		if($this->session->userdata("id_user")!=="" ) {
 
+			$this->form_validation->set_rules('uang_bayar', 'Pembayaran', 'required');
+			if ($this->form_validation->run()==false) {
+
+				$id		= $this->uri->segment(3);
+
+			$query						=  $this->sistem_model->ReservasiId($id);
+
+			foreach ($query->result_array() as $value) {
+				$data['id_reservasi'] 			= $value['id_reservasi'];
+				$data['nama']	 				= $value['nama'];
+				$data['telp'] 					= $value['telp'];
+				$data['alamat'] 				= $value['alamat'];
+				$data['tgl_reservasi_masuk']	= $value['tgl_reservasi_masuk'];
+				$data['tgl_reservasi_kelua'] 	= $value['tgl_reservasi_keluar'];
+				$data['id_kamar'] 				= $value['id_kamar'];
+				$data['nomer_kamar'] 			= $value['nomer_kamar'];
+				$data['harga_kamar'] 			= $value['harga_kamar'];
+				$data['status_kamar'] 			= $value['status_kamar'];
+				$data['waktu'] 					= $value['waktu'];
+			}
+			$data['status_reservasi']	= $this->uri->segment(4);
+
+			$this->template_system->load('template_system','sistem/data/new_reservasi/out',$data);
+			
+				$uang['1'] = $this->input->post('uang_bayar');
+				$uang['2'] = $data['harga_kamar'];
+			// var_dump($uang);
+			// die();
+			 if ($uang['2']>$uang['1']) {
+				$this->session->set_flashdata('message', '<div class="alert alert-dismissible alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Pembayaran kurang!</div>');
+				redirect("sistem/new_reservasi_out".$id);
+				
+			}
+			else{
 			//Update Status reservasi
 			$id['id_reservasi'] 		= $this->input->post("id_reservasi");
 			$up['status_reservasi'] 	= $this->input->post("status_reservasi");
@@ -1485,13 +1529,23 @@ class sistem extends CI_Controller {
 			$in['tgl_pembayaran'] 		= date('Y-m-d');
 			$in['nominal_pembayaran'] 	= $this->input->post("total_bayar");
 			$in['uang_bayar'] 			= $this->input->post("uang_bayar");
-			$in['kembalian'] 			= $this->input->post("kembalian");
+			// $in['kembalian'] 			= $this->input->post("kembalian");
+			$in['kembalian'] 			= $this->input->post("uang_bayar") - $this->input->post("total_bayar");
 			$in['reservasi_id'] 		= $this->input->post("id_reservasi");
-			$this->db->insert("tbl_reservasi_pembayaran",$in);
+
+			if($in['in']['uang_bayar'] < $in['in']['nominal_pembayaran'] ){
+				$this->session->flashdata('');
+			}else{
+				$this->db->insert("tbl_reservasi_pembayaran",$in);
+			}
 				
 						
 			$this->session->set_flashdata('out','OK');
 			redirect("sistem/new_reservasi");
+			
+		}
+				
+			}
 
 		}
 		else{
@@ -1511,11 +1565,11 @@ class sistem extends CI_Controller {
 
 			foreach ($query->result_array() as $value) {
 				$data['id_reservasi'] 			= $value['id_reservasi'];
-				$data['nama_reservasi']	 		= $value['nama_reservasi'];
-				$data['telp_reservasi'] 		= $value['telp_reservasi'];
-				$data['alamat_reservasi'] 		= $value['alamat_reservasi'];
-				$data['tgl_reservasi_masuk']	= tgl_balik($value['tgl_reservasi_masuk']);
-				$data['tgl_reservasi_keluar'] 	= tgl_balik($value['tgl_reservasi_keluar']);
+				$data['nama']	 		= $value['nama'];
+				$data['telp'] 		= $value['telp'];
+				$data['alamat'] 		= $value['alamat'];
+				$data['tgl_reservasi_masuk']	= ($value['tgl_reservasi_masuk']);
+				$data['tgl_reservasi_keluar'] 	= ($value['tgl_reservasi_keluar']);
 				$data['id_kamar'] 				= $value['id_kamar'];
 				$data['nomer_kamar'] 			= $value['nomer_kamar'];
 				$data['harga_kamar'] 			= $value['harga_kamar'];
@@ -1540,8 +1594,8 @@ class sistem extends CI_Controller {
 		if($this->session->userdata("id_user")!=="" ) {
 
 			$id['id_reservasi'] 		= $this->input->post("id_reservasi");
-			$up['tgl_reservasi_masuk'] 	= tgl_luar($this->input->post("tgl_reservasi_masuk"));
-			$up['tgl_reservasi_keluar'] = tgl_luar($this->input->post("tgl_reservasi_keluar"));
+			$up['tgl_reservasi_masuk'] 	= ($this->input->post("tgl_reservasi_masuk"));
+			$up['tgl_reservasi_keluar'] = ($this->input->post("tgl_reservasi_keluar"));
 			$this->db->update("tbl_reservasi",$up,$id);
 
 			$this->session->set_flashdata('perpanjang','OK');
@@ -1559,8 +1613,11 @@ class sistem extends CI_Controller {
 	public function new_reservasi_tambah() {
 
 		if($this->session->userdata("id_user")!=="" ) {
+			$data['tamu']	= $this->sistem_model->tamu();
 
 			$data['kamar']	= $this->sistem_model->KamarKosong();
+			
+			
 
 			$this->template_system->load('template_system','sistem/data/new_reservasi/add',$data);
 
@@ -1577,38 +1634,26 @@ class sistem extends CI_Controller {
 
 		if($this->session->userdata("id_user")!=="" ) {
 
-			$this->form_validation->set_rules('tgl_reservasi_masuk','Tanggal Masuk','required');
-			$this->form_validation->set_rules('tgl_reservasi_keluar','Tanggal Keluar','required');
-			$this->form_validation->set_rules('kamar_id','Kamar','required');
-			$this->form_validation->set_rules('nama_reservasi','Nama','required');
-			$this->form_validation->set_rules('telp_reservasi','Telp','required');
-			$this->form_validation->set_rules('alamat_reservasi','Alamat','required');
-			
-		
-
-			if ($this->form_validation->run()==FALSE) {
-
-				$data['kamar']	= $this->sistem_model->KamarKosong();
-
-				$this->template_system->load('template_system','sistem/data/new_reservasi/add',$data);
-
-			}
-			else {
 
 		
-					$in['tgl_reservasi_masuk'] 		= tgl_luar($this->input->post('tgl_reservasi_masuk'));
-					$in['tgl_reservasi_keluar'] 	= tgl_luar($this->input->post('tgl_reservasi_keluar'));
+					$in['tgl_reservasi_masuk'] 		= ($this->input->post('tgl_reservasi_masuk'));
+					$in['tgl_reservasi_keluar'] 	= ($this->input->post('tgl_reservasi_keluar'));
 					$in['kamar_id'] 				= $this->input->post('kamar_id');
-					$in['nama_reservasi'] 			= $this->input->post('nama_reservasi');
-					$in['telp_reservasi'] 			= $this->input->post('telp_reservasi');
-					$in['alamat_reservasi'] 		= $this->input->post('alamat_reservasi');
+					$in['id_tamu'] 					= $this->input->post('id_tamu');
+					
 					
 							
 					$this->db->insert("tbl_reservasi",$in);
+
+					//Update Status Kamar
+			$id_kamar['id_kamar'] 	= $this->input->post("kamar_id");
+			$up2['status_kamar'] 	= 1;
+			$this->db->update("tbl_kamar",$up2,$id_kamar);
 							
 					$this->session->set_flashdata('berhasil','OK');
 					redirect("sistem/new_reservasi");
-			}
+
+			
 
 
 		}
@@ -1619,6 +1664,131 @@ class sistem extends CI_Controller {
 
 	}
 	//Akhir Reservasi
+
+	//Awal Tamu
+
+	public function tamu() {
+
+		if($this->session->userdata("id_tamu")!=="" ) {
+			$data['tamu']	= $this->sistem_model->tamu();
+			$this->template_system->load('template_system','sistem/data/tamu/index',$data);
+		}
+		else{
+			redirect('sistem');
+
+		}
+	} 
+
+
+	public function tamu_simpan () {
+
+		if($this->session->userdata("id_user")!=="" ) {
+
+			$this->form_validation->set_rules('nama', 'Category Gallery', 'required');
+
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->template_system->load('template_system','sistem/data/sistem');
+
+			}
+			else {
+
+				
+				$in['no_ktp'] = $this->input->post('no_ktp');
+				$in['nama'] = $this->input->post('nama');
+				$in['email'] = $this->input->post('email');
+				$in['telp'] = $this->input->post('telp');
+				$in['alamat'] = $this->input->post('alamat');
+								
+				$this->db->insert("tbl_tamu",$in);
+
+				$this->session->set_flashdata('berhasil','ok');
+				redirect("sistem/tamu");	
+			}
+			
+			
+		}
+		else{
+			redirect('sistem');
+
+		}
+
+	}
+
+	public function tamu_delete() {
+
+		if($this->session->userdata("id_user")!=="" ) {
+
+			$id = $this->uri->segment(3);
+			$this->sistem_model->DeleteTamu($id);
+
+			$this->session->set_flashdata('hapus','ok');
+			redirect("sistem/tamu");
+
+		}
+		else{
+			redirect('sistem');
+
+		}
+
+	}
+
+	public function tamu_edit() {
+
+		if($this->session->userdata("id_user")!=="" ) {
+
+			$id = $this->uri->segment(3);
+
+			$query = $this->sistem_model->EditTamu($id);
+
+			foreach ($query->result_array() as $value) {
+				$data['id_tamu'] 	=  $value['id_tamu'];
+				$data['nama'] =  $value['nama'];
+				
+			}
+
+			$this->template_system->load('template_system','sistem/data/kelas_kamar/edit',$data);
+		
+
+
+		}
+		else{
+			redirect('sistem');
+
+		}
+
+	}
+
+
+	public function tamu_update() {
+
+		if($this->session->userdata("id_user")!=="" ) {
+
+			$id['id_kelas_kamar'] 	=  $this->input->post("id_kelas_kamar");
+			$up['nama_kelas_kamar'] 	=  $this->input->post("nama_kelas_kamar");
+
+			$this->db->update("tbl_kelas_kamar",$up,$id);
+
+			$this->session->set_flashdata('update','ok');
+			redirect("sistem/kelas_kamar");
+
+		}
+		else{
+			redirect('sistem');
+
+		}
+
+	}
+
+	//Akhir Tamu
+
+	//cetak laporan
+	public function print()
+	{
+
+		$data['Reservasi'] = $this->sistem_model->Reservasi();	
+		$this->template_system->load('template_system','sistem/data/reservasi/print',$data);
+	}
 
 	
 }

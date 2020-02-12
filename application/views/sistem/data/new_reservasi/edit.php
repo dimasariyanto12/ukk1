@@ -1,23 +1,15 @@
-<div class="page-bar">
-				<ul class="page-breadcrumb">
-					<li>
-						<i class="fa fa-home"></i>
-						<a href="<?php echo base_url();?>sistem/home">Home</a>
-						<i class="fa fa-angle-right"></i>
-					</li>
-					<li>
-						<a href="<?php echo base_url();?>sistem/new_reservasi">Pemesanan</a>
-					</li>
-				</ul>
-				
-			</div>
-
+ <section class="content-header">
+  <h1>
+  Perpanjang Kamar
+  </h1>
+  <ol class="breadcrumb">
+   <li><a href="#"><i class="fa fa-dashboard"></i> Pemesanan Kamar</a></li> 
+  </ol>
+ </section><br>
 
 <div class="portlet box green">
 									<div class="portlet-title">
-										<div class="caption">
-											<i class="fa fa-gift"></i>Perpanjang Kamar
-										</div>
+										
 										
 									</div>
 									<div class="portlet-body form">
@@ -41,7 +33,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">Tanggal Masuk</label>
 															<div class="col-md-9">
-																 <input class="form-control form-control-inline input-medium date-picker" name="tgl_reservasi_masuk" id="tgl_reservasi_masuk" size="16" type="text" value="<?php echo $tgl_reservasi_masuk;?>" readonly/>
+																 <input class="form-control " name="tgl_reservasi_masuk" id="tgl_reservasi_masuk" size="16" type="text" value="<?php echo $tgl_reservasi_masuk;?>" readonly/>
                                                               
 															</div>
 														</div>
@@ -49,9 +41,9 @@
 
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">Tanggal Keluar</label>
+															<label class="control-label col-md-2">Tanggal Keluar</label>
 															<div class="col-md-9">
-																 <input class="form-control form-control-inline input-medium date-picker" name="tgl_reservasi_keluar" id="tgl_reservasi_keluar" size="16" type="text" value="<?php echo $tgl_reservasi_keluar;?>"/>
+																 <input class="form-control datepicker" name="tgl_reservasi_keluar" id="tgl_reservasi_keluar" size="16" type="text" value="<?php echo $tgl_reservasi_keluar;?>"/>
                                                               
 															</div>
 														</div>
@@ -71,9 +63,9 @@
 
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">Nama</label>
+															<label class="control-label col-md-2">Nama</label>
 															<div class="col-md-9">
-																<input type="text" class="form-control" placeholder="" name="nama_reservasi" value="<?php echo $nama_reservasi;?>" disabled>
+																<input type="text" class="form-control" placeholder="" name="nama" value="<?php echo $nama;?>" disabled>
 																
 															</div>
 														</div>
@@ -86,7 +78,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">Tlp</label>
 															<div class="col-md-9">
-																<input type="text" class="form-control" placeholder="" name="telp_reservasi" value="<?php echo $telp_reservasi;?>" disabled>
+																<input type="text" class="form-control" placeholder="" name="telp" value="<?php echo $telp;?>" disabled>
 																
 															</div>
 														</div>
@@ -94,9 +86,9 @@
 
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">Alamat</label>
+															<label class="control-label col-md-2">Alamat</label>
 															<div class="col-md-9">
-																<input type="text" class="form-control" placeholder="" name="alamat_reservasi" value="<?php echo $alamat_reservasi;?>" disabled>
+																<input type="text" class="form-control" placeholder="" name="alamat" value="<?php echo $alamat;?>" disabled>
 																
 															</div>
 														</div>
@@ -108,18 +100,12 @@
 
 											</div>
 											<div class="form-actions">
-												<div class="row">
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-offset-3 col-md-9">
-																<button type="submit" class="btn green">Perpanjang</button>
-																</div>
-														</div>
-													</div>
-													<div class="col-md-6">
-													</div>
-												</div>
-											</div>
+													<div class="panel-footer">
+                           <a href="<?php echo base_url();?>sistem/home" button class="btn btn-danger pull"><i class="fa fa-arrow-circle-left">Back</i></a>
+																										
+                 <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Save</button>
+																
+                       </div>   
 										<?php echo form_close();?>  
 										
 									</div>

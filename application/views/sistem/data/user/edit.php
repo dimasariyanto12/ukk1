@@ -24,7 +24,7 @@
 													<input type="hidden" name="id_user" value="<?php echo $id_user;?>" >
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">Group</label>
+															<label class="control-label col-md-3">Role</label>
 															<div class="col-md-9">
 																<select data-placeholder="Select..." name="user_group_id" class="form-control select2me">
 																<option value=""></option>					

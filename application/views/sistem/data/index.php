@@ -42,13 +42,13 @@
 						<td><?php echo $no;?></td>
 						<td>
 							<a  class="btn btn-success " href="<?php echo base_url();?>sistem/new_reservasi_in/<?php echo $tampil['id_reservasi'];?>/1"> CHECK IN</a> 
-						</td>   
-						<td><?php echo $tampil['nama_reservasi'];?></td>
-						<td><?php echo $tampil['telp_reservasi'];?></td>
-						<td><?php echo $tampil['alamat_reservasi'];?></td>
-						<td><?php echo tgl_indo($tampil['tgl_reservasi_masuk']);?></td>
-						<td><?php echo tgl_indo($tampil['tgl_reservasi_keluar']);?></td>
-						<td><?php echo $tampil['nomer_kamar'];?></td>
+							
+					<td><?php echo $tampil['nama'];?></td>
+					<td><?php echo $tampil['telp'];?></td>
+					<td><?php echo $tampil['alamat'];?></td>
+					<td><?php echo tgl_indo($tampil['tgl_reservasi_masuk']);?></td>
+					<td><?php echo tgl_indo($tampil['tgl_reservasi_keluar']);?></td>
+					<td><?php echo $tampil['nomer_kamar'];?></td>
 						
 						
 					</tr>
@@ -59,6 +59,7 @@
 			</tbody>
 		</tfoot>
 	</table>
+</div>
 </div>
 </div>
 
@@ -74,9 +75,6 @@
 					<h3 class="box-title">Kamar Kosong</h3>
 				</div>
 
-
-				
-			</div>
 
 			<div class="portlet-body">
 				
@@ -110,7 +108,9 @@
 					</tbody>
 				</table>
 			</div>
-		</div>		
-	</div>
-</div>
+			</div>
+			</div>
+			
+			
+						
 

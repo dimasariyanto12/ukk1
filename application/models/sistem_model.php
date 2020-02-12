@@ -38,6 +38,10 @@ class sistem_model extends CI_Model {
 
 	}
 
+	
+
+
+	
 	 //Awal Kategori Galeri
 	 function KategoriGaleri(){
 	 	return $this->db->query("select * from tbl_kategori_galeri order by id_kategori_galeri desc");
@@ -182,20 +186,32 @@ class sistem_model extends CI_Model {
 	 //Akhir Sistem
 
 
+	public function getLaporanByDate()
+	{
+		$tanggal1 = $this->input->post('tanggal_awal');
+		$tanggal2 = $this->input->post('tanggal_akhir');
+
+	
+		$this->db->where('tgl_reservasi_masuk >=', $tanggal1 );
+		$this->db->where('tgl_reservasi_masuk <=', $tanggal2 );
+		return $this->db->select('id_reservasi, tgl_reservasi_masuk, tgl_reservasi_keluar')->from('tbl_reservasi')->join('tbl_kamar', 'tbl_reservasi.kamar_id=tbl_kamar.id_kamar')->join('tbl_tamu', 'tbl_reservasi.id_tamu=tbl_tamu.id_tamu')->order_by('id_reservasi', 'DESC')->get()->result_array();
+
+		return $this->db->query("select id_reservasi, tgl_reservasi_masuk, tgl_reservasi_cellar from tbl_reservasi join tbl_kamar, tbl_reservasi.kamar_id=tbl_kamar.id_kamar join tbl_tamu, tbl_reservasi.id_tamu=tbl_tamu.id_tamu ORDER_BY id_reservasi DESC");
+	}
+
 	 //Awal Reservasi
 	 function Reservasi() {
-
-	 	return $this->db->query("select a.*,b.* from tbl_reservasi a 
-	 	join tbl_kamar b on a.kamar_id=b.id_kamar order by a.id_reservasi desc");
-
+		return $this->db->query("select a.*,b.*,c.* from tbl_reservasi a 
+	 	join tbl_kamar b on a.kamar_id=b.id_kamar join tbl_tamu c on a.id_tamu=c.id_tamu
+		 order by a.id_reservasi desc");			 
 	 }
 	 //Akhir Reservasi
 
 	 //Awal New Reservasi
 	 function NewReservasi() {
 
-	 	return $this->db->query("select a.*,b.* from tbl_reservasi a 
-	 	join tbl_kamar b on a.kamar_id=b.id_kamar 
+	 	return $this->db->query("select a.*,b.*,c.* from tbl_reservasi a 
+	 	join tbl_kamar b on a.kamar_id=b.id_kamar join tbl_tamu c on a.id_tamu=c.id_tamu
 	 	where a.status_reservasi='0' or a.status_reservasi='1' or a.status_reservasi='2'
 	 	order by a.id_reservasi desc");
 
@@ -209,20 +225,38 @@ class sistem_model extends CI_Model {
 	 }
 
 	 function ReservasiId($id) {
-	 	return $this->db->query("select a.*,b.*,TIMESTAMPDIFF(DAY, a.tgl_reservasi_masuk, a.tgl_reservasi_keluar) as waktu from tbl_reservasi a 
-	 	join tbl_kamar b on a.kamar_id=b.id_kamar where id_reservasi='$id' ");
+	 	return $this->db->query("select a.*,b.*,c.*,TIMESTAMPDIFF(DAY, a.tgl_reservasi_masuk, a.tgl_reservasi_keluar) as waktu from tbl_reservasi a 
+		 join tbl_kamar b on a.kamar_id=b.id_kamar  join tbl_tamu c on a.id_tamu=c.id_tamu
+		   where id_reservasi='$id' ");
 
 	 }
 
 	 function NewReservasiBaru() {
 
-	 	return $this->db->query("select a.*,b.* from tbl_reservasi a 
-	 	join tbl_kamar b on a.kamar_id=b.id_kamar 
-	 	where a.status_reservasi='0' 
-	 	order by a.id_reservasi desc");
+		return $this->db->query("select a.*,b.*,c.* from tbl_reservasi a 
+		join tbl_kamar b on a.kamar_id=b.id_kamar join tbl_tamu c on a.id_tamu=c.id_tamu
+		where a.status_reservasi='0'
+		order by a.id_reservasi desc");
 
 	 }
 	 //Akhir New Reservasi
+
+
+ 	//Awal Tamu Kamar
+	 function Tamu(){
+	 	return $this->db->query("select * from tbl_tamu order by id_tamu desc");
+	 }
+
+
+	 function DeleteTamu($id) {
+	 	return $this->db->query("delete from tbl_kelas_kamar where id_kelas_kamar='$id' ");
+	 }
+
+	 function EditTamu($id) {
+	 	return $this->db->query("select * from tbl_tamu where id_tamu='$id' ");
+	 }
+
+	 //Akhir Tamu Kamar
 
 
 	

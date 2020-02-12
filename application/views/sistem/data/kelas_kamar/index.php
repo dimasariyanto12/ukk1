@@ -11,46 +11,44 @@
 <div class="row">
 				<div class="col-md-12">
 					
-					<?php 
-									
-													if ($this->session->flashdata('hapus')){
-									echo "<div class='alert alert-danger'>
-												                   <span>Kelas Kamar Delete</span>  
-												                </div>";
-													}
-													else if($this->session->flashdata('berhasil')){
-														echo "<div class='alert alert-success'>
-												                   <span>Kelas Kamar Save</span>  
-												                </div>";
-													}
-													else if($this->session->flashdata('update')){
+				<?php 
 
-														echo "<div class='alert alert-success'>
-												                   <span>Kelas Kamar Update</span>  
-												                </div>";
+				if ($this->session->flashdata('hapus')){
+				echo "<div class='alert alert-danger'>
+				<span>Kelas Kamar Delete</span>  
+				</div>";
+				}
+				else if($this->session->flashdata('berhasil')){
+				echo "<div class='alert alert-success'>
+				<span>Kelas Kamar Save</span>  
+				</div>";
+				}
+				else if($this->session->flashdata('update')){
 
-													}
-													else if($this->session->flashdata('ada')){
+				echo "<div class='alert alert-success'>
+				<span>Kelas Kamar Update</span>  
+				</div>";
 
-														echo "<div class='alert alert-danger'>
-												                   <span>Kelas Kamar Exist</span>  
-												                </div>";
+				}
+				else if($this->session->flashdata('ada')){
 
-													}
-												
-							?>
+				echo "<div class='alert alert-danger'>
+				<span>Kelas Kamar Exist</span>  
+				</div>";
+
+				}
+
+				?>
 						<div class="portlet box green">
 		<div class="box-header">
-		<a class="btn  btn-primary pull-left" data-toggle="modal" data-target="#modal-default" >
+		<a class="btn  btn-primary pull-left" data-toggle="modal" data-target="#m_modal_1" >
 									Add <i class="fa fa-plus"></i>
 								</a>
 
 
 						<div class="portlet-body">
 							<div class="table-toolbar">
-								<div class="row">
-
-									
+								<div class="row">			
 									
 								</div>
 							</div>
@@ -151,7 +149,7 @@
 				</div>
 			
 				<div class="modal-body">
-				<?php echo form_open('sistem/kelas_kamar_simpan/'); ?>
+				<?php echo form_open('sistem/kelas_kamar_update/'); ?>
 						<div class="form-group">
 							<label for="recipient-name" class="form-control-label">
 								Kelas Kamar:

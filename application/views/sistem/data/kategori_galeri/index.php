@@ -43,7 +43,7 @@
 		<div class="portlet box green">
 		<div class="box-header">
 		
-		<a class="btn  btn-primary pull-left" data-toggle="modal" data-target="#modal-default" >
+		<a class="btn  btn-primary pull-left" data-toggle="modal" data-target="#m_modal_1" >
 									Add <i class="fa fa-plus"></i>
 								</a><br><br>
 			<div class="portlet-body">
